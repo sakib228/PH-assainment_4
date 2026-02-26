@@ -1,6 +1,4 @@
-// Initial active tab ---
 let buttonClick = "all";
-
 const tabActive = ["bg-black", "border-navy", "text-white"];
 const tabInActive = [
   "bg-transparent",
@@ -8,19 +6,17 @@ const tabInActive = [
   "border-state-200",
   "text-black",
 ];
-// containers --- 
+// containers ---
 const allContainer = document.getElementById("all_container");
 const interviewContainer = document.getElementById("interview_container");
 const rejectContainer = document.getElementById("rejecte_container");
 const main_card_container = document.getElementById("main_card_container");
-
+// counts ---
 const total = document.getElementById("total");
 const interview = document.getElementById("interview");
 const reject = document.getElementById("rejected");
 
-// Function to switch tabs
 function buttonSwitch(tab) {
-  // Update tab button styles
   ["all", "interview", "rejected"].forEach((tabName) => {
     const btn = document.getElementById("tab-" + tabName);
     if (tabName === tab) {
@@ -36,7 +32,6 @@ function buttonSwitch(tab) {
   interviewContainer.classList.add("hidden");
   rejectContainer.classList.add("hidden");
 
-  // Show selected section
   if (tab === "all") allContainer.classList.remove("hidden");
   else if (tab === "interview") interviewContainer.classList.remove("hidden");
   else rejectContainer.classList.remove("hidden");
@@ -53,7 +48,7 @@ updateCounters();
 main_card_container.addEventListener("click", function (event) {
   const clicked = event.target;
   const card = clicked.closest(".card");
-  if (!card) return; // ignore if not clicked inside a card
+  if (!card) return;
 
   const status = card.querySelector(".status");
 
@@ -69,4 +64,17 @@ main_card_container.addEventListener("click", function (event) {
 
   updateCounters();
 });
+const emptyMessage = document.querySelector(".flex-col.items-center");
+function showEmptyMessage(tab) {
+  let cards = 0;
+  if (tab === "all") cards = allContainer.querySelectorAll(".card").length;
+  if (tab === "interview")
+    cards = interviewContainer.querySelectorAll(".card").length;
+  if (tab === "rejected")
+    cards = rejectContainer.querySelectorAll(".card").length;
+
+  if (cards === 0) emptyMessage.classList.remove("hidden");
+  else emptyMessage.classList.add("hidden");
+}
+
 buttonSwitch(buttonClick);
